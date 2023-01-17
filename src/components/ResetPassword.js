@@ -4,7 +4,7 @@ import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-function Signup() {
+function ResetPassword() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -129,4 +129,4 @@ function Signup() {
     )
 }
 
-export default Signup;
+export default ResetPassword;
