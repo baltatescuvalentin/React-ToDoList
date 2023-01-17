@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
     return (
-        <div className='min-h-[calc(100vh-128px-64px)] flex flex-col items-center justify-center [&>*]:m-3'>
+        <div className='flex flex-col items-center justify-center mt-14 [&>*]:m-3'>
             <p className='text-6xl font-semibold text-center'>Welcome to To-Do List!</p>
             <p className='text-2xl'>This is an app that let's you store and keep track of activities you want to do.</p>
             <p className='text-3xl font-semibold'>What it is offering:</p>

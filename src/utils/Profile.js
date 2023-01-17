@@ -22,7 +22,7 @@ function Profile() {
             {
                 hover ? profile ?
                     <div className='rounded-lg mt-[120px] flex flex-col items-center justify-center border border-gray-300 shadow-md divide-x-0 divide-solid w-36  bg-white absolute'>
-                        <div className='hover:cursor-pointer hover:text-gray-400 mb-1 font-medium text-gray-600 text-2xl' onClick={() => goTo('login')}>Log In</div>
+                        <div className='hover:cursor-pointer hover:text-gray-400 mb-1 font-medium text-gray-600 text-2xl' onClick={() => goTo('signin')}>Sign In</div>
                         <div className='hover:cursor-pointer hover:text-gray-400 font-medium text-gray-600 text-2xl' onClick={() => goTo('signup')}>Sign up</div>
                     </div> :
                     <div className='rounded-lg mt-[96px] flex flex-col items-center justify-center border border-gray-300 shadow-md divide-x-0 divide-solid w-36  bg-white absolute'>

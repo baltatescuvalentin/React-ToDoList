@@ -5,7 +5,7 @@ function Footer() {
     let date = new Date().getFullYear();
 
     return (
-        <footer className='flex flex-row items-center justify-center w-full h-16 bg-red-400'>
+        <footer className='flex flex-row items-center justify-center w-full h-14 bg-red-400 mt-10'>
             <p className='text-xl text-center text-white font-medium'>
                 Copyright©baltatescuvalentin {date} 
             </p>

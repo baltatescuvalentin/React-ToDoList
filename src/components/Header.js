@@ -3,6 +3,7 @@ import Profile from '../utils/Profile';
 
 
 function Header() {
+
     return (
         <div className='flex flex-row items-center justify-between h-32 w-full bg-red-400 p-5 gap-2'>
             <div className='flex flex-row items-center'>

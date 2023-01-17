@@ -6,7 +6,9 @@ function SharedLayout() {
     return (
         <div className='flex flex-col'>
             <Header />
-            <Outlet />
+            <div className='min-h-[calc(100vh-128px-96px)]'>
+                <Outlet />
+            </div>
             <Footer />
         </div>
     )
