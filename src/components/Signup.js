@@ -45,7 +45,7 @@ function Signup() {
     }
 
     return (
-        <div className="shadow-lg border rounded-lg border-gray-400 py-5 px-8 bg-gray-50 w-[500px] mt-16 ml-auto mr-auto">
+        <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mb-8 mt-12 ml-auto mr-auto">
             <p className="text-4xl font-semibold mb-4 text-gray-700">Sign Up!</p>
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <form className="flex flex-col">
