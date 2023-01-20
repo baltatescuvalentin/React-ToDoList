@@ -1,9 +1,9 @@
 import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import { FaTimes } from 'react-icons/fa';
-import NotesForm from "../dialog-forms/NotesForm";
+import NotesForm from "../dialog-content/NotesForm";
 
 
-function NotesDialog({closeDialog, open}) {
+function NotesDialogCreate({closeDialog, open}) {
     return (
         <Dialog open={open}>
             <DialogTitleCustom closeDialog={closeDialog}/>
@@ -28,4 +28,4 @@ function DialogTitleCustom({closeDialog}) {
     )
 }
 
-export default NotesDialog;
+export default NotesDialogCreate;

@@ -6,30 +6,13 @@ import { BsPlusCircleFill, BsCircleFill } from 'react-icons/bs';
 import { ImFolderOpen } from 'react-icons/im';
 import { GoTasklist } from 'react-icons/go';
 import { useState } from 'react';
-import NotesDialog from './dialogs/NotesDialog';
+import NotesDialog from './dialogs/NotesDialogCreate';
+import Notes from './Notes';
+import Folders from './Folders';
 
 function Sidebar() {
 
-    const [openNotes, setOpenNotes] = useState(false);
-    const [openCreateNote, setOpenCreateNote] = useState(false);
     const [openCreateFolder, setOpenCreateFolder] = useState(false);
-
-
-    function handleOpenNotes() {
-        setOpenNotes(true);
-    }
-
-    function handleCloseNotes() {
-        setOpenNotes(false);
-    }
-
-    function handleOpenCreateNotes() {
-        setOpenCreateNote(true);
-    }
-
-    function handleCloseCreateNotes() {
-        setOpenCreateNote(false);
-    }
 
     function handleOpenCreateFolder() {
         setOpenCreateFolder(true);
@@ -41,7 +24,6 @@ function Sidebar() {
 
     return (
         <div className="flex flex-col py-6 px-10 bg-[#f5f5f54d] min-h-full w-[300px] shadow-[4px_0_5px_-2px_rgba(0,_0,_0,_0.7)]">
-            <NotesDialog closeDialog={handleCloseNotes} open={openNotes}/>
             <div className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <FiInbox size={30} className='ml-2' color='tomato'/>
                 <p className='ml-4 text-[28px]'>Inbox</p>
@@ -67,25 +49,9 @@ function Sidebar() {
                 <p className='ml-4 text-[28px]'>Finished</p>
             </div>
 
-            <div className='flex flex-row items-center justify-start mt-6'>
-                <div className='flex flex-row items-center rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
-                    <CgNotes size={36} color='tomato' />
-                    <p className='ml-2 text-[34px]'>Notes</p>
-                </div>
-                <button onClick={handleOpenNotes} className='ml-[auto] hover:cursor-pointer'>
-                    <BsPlusCircleFill size={36} color='tomato'/>
-                </button>
-            </div>
+           <Notes />
 
-            <div className='flex flex-row items-center justify-between mt-6'>
-                <div className='flex flex-row items-center'>
-                    <GoTasklist size={36} color='tomato' />
-                    <p className='ml-2 text-[32px]'>To Do</p>
-                </div>
-                <button  className='ml-[auto] hover:cursor-pointer'>
-                    <BsPlusCircleFill size={36} color='tomato'/>
-                </button>
-            </div>
+            <Folders />
         </div>
     )
 }
