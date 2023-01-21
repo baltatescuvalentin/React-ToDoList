@@ -44,7 +44,7 @@ function Signin() {
                 <input type="submit" 
                     disabled={validInputs() ? false : true} 
                     className={`text-[24px] bg-green-400 rounded-lg text-white w-full h-10 ${validInputs() && 'hover:cursor-pointer'} ${validInputs() ? 'bg-green-400 shadow' : 'bg-gray-400'}`} 
-                    value="Sign up!"/> 
+                    value="Sign in!"/> 
             </form>
             <div className="border-b-2 border-black m-4"></div>
             <div className="flex flex-col items-center justify-center">

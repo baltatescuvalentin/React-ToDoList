@@ -118,7 +118,7 @@ function ResetPassword() {
                 </div>
                 }
 
-                <p className="text-red-500 mb-2">Fields with * are required!</p>
+                { !validInputs() && <p className="text-red-500 mb-2">Fields with * are required!</p>}
   
                 <input type="submit" 
                     disabled={validInputs() ? false : true} 

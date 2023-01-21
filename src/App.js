@@ -5,19 +5,22 @@ import SharedLayout from './components/SharedLayout';
 import Signup from './components/Signup';
 import ResetPassword from './components/ResetPassword';
 import Wrapper from './components/TasksComponents/Wrapper';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='react-todolist' element={<SharedLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path='signup' element={<Signup />} />
-          <Route path='signin' element={<Signin />} />
-          <Route path='resetpassword' element={<ResetPassword />} />
-          <Route path='tasks' element={<Wrapper />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path='react-todolist' element={<SharedLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path='signup' element={<Signup />} />
+            <Route path='signin' element={<Signin />} />
+            <Route path='resetpassword' element={<ResetPassword />} />
+            <Route path='tasks' element={<Wrapper />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

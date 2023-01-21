@@ -5,23 +5,27 @@ import { useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{6,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
 function Signup() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [fullname, setFullname] = useState('');
+    const [email, setEmail] = useState('');
 
     const [validUsername, setValidUsername] = useState();
     const [validPassword, setValidPassword] = useState();
     const [validConfirm, setValidConfirm] = useState();
     const [validFullname, setValiFullname] = useState();
+    const [validEmail, setValidEmail] = useState();
 
     const [focusUsername, setFocusUsername] = useState(false);
     const [focusFullname, setFocusFullname] = useState(false);
     const [focusPassword, setFocusPassword] = useState(false);
     const [focusConfirm, setFocusConfirm] = useState(false);
-
+    const [focusEmail, setFocusEmail] = useState(false);
 
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -38,10 +42,14 @@ function Signup() {
 
     useEffect(() => {
         setValiFullname(fullname !== '');
-    }, [fullname])
+    }, [fullname]);
+
+    useEffect(() => {
+        setValidEmail(EMAIL_REGEX.test(email));
+    }, [email])
 
     function validInputs() {
-        return validUsername && validPassword && validConfirm && validFullname;
+        return validUsername && validPassword && validConfirm && validFullname && validEmail;
     }
 
     return (
@@ -77,6 +85,29 @@ function Signup() {
                     </div>
                 </div>
                 }
+
+                <label className="text-[18px] flex flex-row items-center [&>*]:ml-2" htmlFor="fullname">
+                    <span className="text-red-500">*</span>Email
+                {validEmail ? <FiThumbsUp size={18} color="green"/> : (!validEmail && email !== '') && <FiThumbsDown size={18} color="red" /> }</label>
+                <input type="email" 
+                    className="mb-4 text-[22px] outline-none bg-gray-50 border-b-2 border-gray-800" 
+                    id="Email" 
+                    required 
+                    placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setFocusEmail(true)}
+                    onBlur={() => setFocusEmail(false)}
+                    />
+                {focusEmail && !validEmail && 
+                <div className="mb-2">
+                    <div className="flex flex-row items-center">
+                        <RxDotFilled color="red" size={24} />
+                        <p className="text-red-600">Enter an valid email.</p>
+                    </div>
+                    
+                </div>
+                }
+                
             
                 <label className="text-[18px] flex flex-row items-center [&>*]:ml-2" htmlFor="fullname">
                     <span className="text-red-500">*</span>Fullname
@@ -159,7 +190,9 @@ function Signup() {
                 </div>
                 }
 
-                <p className="text-red-500 mb-2">Fields with * are required!</p>
+                {
+                   !validInputs() && <p className="text-red-500 text-[20px] mb-2">Fields with * are required!</p>
+                }
   
                 <input type="submit" 
                     disabled={validInputs() ? false : true} 
