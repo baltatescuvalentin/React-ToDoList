@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { RxDotFilled } from 'react-icons/rx';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
+import { useAuth } from "../contexts/AuthContext";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -17,8 +18,20 @@ function ResetPassword() {
     const [focusPassword, setFocusPassword] = useState(false);
     const [focusConfirm, setFocusConfirm] = useState(false);
 
-
     const [errorMsg, setErrorMsg] = useState('');
+
+    const { resetpassword } = useAuth();
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+            resetpassword(username, password);
+        }
+        catch {
+            setErrorMsg('Error resetting password!')
+        }
+    }
 
     useEffect(() => {
         setValidUsername(username !== '');
@@ -37,7 +50,7 @@ function ResetPassword() {
         <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mt-20 ml-auto mr-auto">
             <p className="text-4xl font-semibold mb-4 text-gray-700">Reset Password!</p>
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
-            <form className="flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col">
                 <label className="text-[18px] flex flex-row items-center [&>*]:ml-2" htmlFor="username">
                     <span className="text-red-500">*</span>Username 
                 {validUsername ? <FiThumbsUp size={18} color="green"/> : (!validUsername && username !== '') && <FiThumbsDown size={18} color="red" /> }</label>
@@ -123,7 +136,7 @@ function ResetPassword() {
                 <input type="submit" 
                     disabled={validInputs() ? false : true} 
                     className={`text-[24px] mb-2 bg-green-400 rounded-lg text-white w-full h-10 ${validInputs() && 'hover:cursor-pointer'} ${validInputs() ? 'bg-green-400 shadow' : 'bg-gray-400'}`} 
-                    value="Sign up!"/> 
+                    value="Reset password!"/> 
             </form>
         </div>
     )

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { RxDotFilled } from 'react-icons/rx';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{6,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -29,6 +31,20 @@ function Signup() {
 
     const [errorMsg, setErrorMsg] = useState('');
 
+    const { signup } = useAuth();
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+            setErrorMsg('');
+            await signup(username, email, password, fullname);
+        }
+        catch(e) {
+            setErrorMsg(e.message);
+        }
+    }
+
     let navigator = useNavigate();
 
     useEffect(() => {
@@ -55,8 +71,8 @@ function Signup() {
     return (
         <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mb-8 mt-12 ml-auto mr-auto">
             <p className="text-4xl font-semibold mb-4 text-gray-700">Sign Up!</p>
-            { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
-            <form className="flex flex-col">
+            { errorMsg && <p className="text-xl bg-red-100 text-red-800 p-2 rounded-lg font-medium mb-2">{errorMsg}</p>}
+            <form onSubmit={handleSubmit} className="flex flex-col">
                 <label className="text-[18px] flex flex-row items-center [&>*]:ml-2" htmlFor="username">
                     <span className="text-red-500">*</span>Username 
                 {validUsername ? <FiThumbsUp size={18} color="green"/> : (!validUsername && username !== '') && <FiThumbsDown size={18} color="red" /> }</label>

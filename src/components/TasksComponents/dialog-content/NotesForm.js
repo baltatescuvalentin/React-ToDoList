@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import { addToNotes } from "../../../firebase/functions/FirebaseFunctions";
 
 
 
@@ -6,20 +8,24 @@ function NotesForm({closeDialog}) {
 
     // const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [errorMsg, setErrorMsg] = useState();
+    const { currentUser } = useAuth();
 
     function validateForm() {
         return description;
     }
 
-    function handleForm(e) {
+    async function handleForm(e) {
         
         e.preventDefault();
 
-        const formValue = {
-            'description': description,
+        try {
+            setErrorMsg('');
+            await addToNotes(description, currentUser.uid);
         }
-
-        console.log(formValue);
+        catch {
+            setErrorMsg('Error saving the note. Try again!')
+        }
 
         closeDialog();
     }

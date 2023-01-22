@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 
 function Signin() {
@@ -8,8 +9,24 @@ function Signin() {
 
     const [errorMsg, setErrorMsg] = useState('');
 
+    const { signin } = useAuth();
+    const { currentUser } = useAuth();
+
     function validInputs() {
         return username && password;
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+            setErrorMsg('');
+            await signin(username, password);
+            console.log(currentUser.uid);
+        }
+        catch {
+            setErrorMsg('Wrong password!');
+        }
     }
 
     let navigator = useNavigate();
@@ -18,7 +35,7 @@ function Signin() {
         <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mt-16 ml-auto mr-auto">
             <p className="text-4xl font-semibold mb-4 text-gray-700">Sign In!</p>
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
-            <form className="flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col">
                 <label className="text-[18px] flex flex-row items-center [&>*]:ml-2" htmlFor="username">
                     Username 
                 </label>
