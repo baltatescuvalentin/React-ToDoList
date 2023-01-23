@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineUserAdd } from 'react-icons/ai';
+import { AiOutlineUserAdd, AiOutlineUser } from 'react-icons/ai';
 import { FiThumbsUp } from 'react-icons/fi';
 import { TfiHandPointRight } from 'react-icons/tfi';
 import { Link } from 'react-router-dom';
@@ -32,6 +32,14 @@ function HomePage() {
                 <TfiHandPointRight size={30} />
                 <Link to='signup'>
                     <AiOutlineUserAdd className='hover:cursor-pointer' size={40} />
+                </Link>
+            </div>
+
+            <div className='flex flex-row items-center [&>*]:mr-2'>
+                <p className='text-3xl font-semibold'>Or sign in your account!</p>
+                <TfiHandPointRight size={30} />
+                <Link to='signin'>
+                    <AiOutlineUser className='hover:cursor-pointer' size={40} />
                 </Link>
             </div>
         </div>  

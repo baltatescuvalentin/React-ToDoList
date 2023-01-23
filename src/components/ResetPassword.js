@@ -26,6 +26,7 @@ function ResetPassword() {
         e.preventDefault();
 
         try {
+            setErrorMsg('');
             resetpassword(username, password);
         }
         catch {

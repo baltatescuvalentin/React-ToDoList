@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import { addToFolders } from "../../../firebase/functions/FirebaseFunctions";
 
 function FoldersForm({closeDialog}) {
 
     const [name, setName] = useState('');
 
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const { currentUser } = useAuth();
+
     function validateForm() {
         return name;
     }
 
-    function handleForm(e) {
-        
+    async function handleForm(e) {
         e.preventDefault();
-
-        const formValue = {
-            'name': name,
+        
+        try {
+            setErrorMsg('')
+            await addToFolders(name, currentUser.uid);
         }
-
-        console.log(formValue);
+        catch(e) {
+            setErrorMsg(e.message);
+        }
 
         closeDialog();
     }
 
     return (
         <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[500px]">
+            { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Folder Name</label>
             <input type='text' id='desciption' required placeholder='Folder Name...'
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 

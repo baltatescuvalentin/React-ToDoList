@@ -1,11 +1,16 @@
+import { TabProvider } from "../../contexts/TasksTabContext";
 import Sidebar from "./Sidebar";
+import TasksTab from "./TasksTab";
 
 
 function Wrapper() {
+
     return(
         <div className="flex flex-row min-h-[inherit]">
-            <Sidebar />
-            <p> text </p>
+            <TabProvider>
+                <Sidebar />
+                <TasksTab />
+            </TabProvider>
         </div>
     )
 }

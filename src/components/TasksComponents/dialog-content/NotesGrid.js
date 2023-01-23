@@ -3,38 +3,6 @@ import { FaTimes } from "react-icons/fa"
 import { useAuth } from "../../../contexts/AuthContext";
 import { getNotes } from "../../../firebase/functions/FirebaseFunctions";
 
-
-const notes = [
-    {
-        title: 'note1',
-        text: 'Acesta este un test\n',
-    },
-    {
-        title: 'note2',
-        text: 'This is a test\t Hope it works, i it looks good'
-    },
-    {
-        title: 'note3 dwad wdawd wda dwadw',
-        text: 'Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba '
-    },
-    {
-        title: 'note4',
-        text: 'Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba '
-    },
-    {
-        title: 'note5',
-        text: 'Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba '
-    },
-    {
-        title: 'note6',
-        text: 'Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba '
-    },
-    {
-        title: 'note7',
-        text: 'Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba Alibaba '
-    }
-]
-
 function NotesGrid() {
 
     const [notes, setNotes] = useState([]);
@@ -45,7 +13,6 @@ function NotesGrid() {
         async function fetchNotes() {
             try {
                 const dbNotes = await getNotes(currentUser.uid);
-                const notesMap = dbNotes.map(n => n);
                 console.log(dbNotes);
                 setNotes(dbNotes);
             }
@@ -57,7 +24,7 @@ function NotesGrid() {
     }, []);
 
     const Notes = notes?.map((n) => {
-        return <Note key={n.userUid} note={n.note} />
+        return <Note key={n.noteUid} note={n.note} />
     })
 
     return (

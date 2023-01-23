@@ -37,6 +37,7 @@ function NotesForm({closeDialog}) {
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800" 
                 onChange={(e) => setName(e.target.value)}
             /> */}
+            { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="description">Description</label>
             <textarea id='desciption' required placeholder='Description...'
                 className="mb-4 h-[100px] w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 

@@ -31,7 +31,7 @@ function Notes() {
             <NotesDialogCreate closeDialog={handleCloseCreateNote} open={openCreateNote}/>
             <NotesDialogShow closeDialog={handleCloseNotes} open={openNotes} />
             <div className='flex flex-row items-center justify-start mt-6'>
-                <div className='flex flex-row items-center rounded-lg hover:bg-gray-200 hover:cursor-pointer'
+                <div className='flex flex-row items-center px-2 rounded-lg hover:bg-gray-200 hover:cursor-pointer'
                     onClick={handleOpenNotes}>
                     <CgNotes size={36} color='tomato' />
                     <p className='ml-2 text-[34px]'>Notes</p>
