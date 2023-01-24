@@ -1,5 +1,5 @@
 import app, { firestore } from "../firebase";
-import { collection, query, where, getDocs, onSnapshot, addDoc, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, orderBy, deleteDoc, doc } from "firebase/firestore";
 import { v4 as uuid4 } from 'uuid';
 import _ from "lodash";
 
@@ -50,7 +50,7 @@ async function checkIfFolderExists(folderName) {
     return true;
 }
 
-async function addToTasks(folderName, name, description, date, priority, finished = false, userUid) {
+async function addToTasks(folderName, name, description, date, priority, finished = false, userUid, time) {
     return await addDoc(collection(firestore, 'tasks'), {
         folderName: folderName,
         taskUid: uuid4(),
@@ -60,7 +60,19 @@ async function addToTasks(folderName, name, description, date, priority, finishe
         finished: finished,
         userUid: userUid,
         date: date,
+        time: time,
     })
+}
+
+async function deleteFolder(folderUid) {
+    const q = query(collection(firestore, 'folders'), where('folderUid', '==', folderUid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach( (doc) =>  {
+        const docRef = doc.ref;
+         deleteDoc(docRef);
+    });
+    // const docRef = doc(firestore, 'folders', folderUid);
+    // await deleteDoc(docRef);
 }
 
 async function getFolders(uid) {
@@ -105,4 +117,5 @@ export {
     getFolders,
     compareObjects,
     addToTasks,
+    deleteFolder,
 }

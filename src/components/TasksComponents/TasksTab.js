@@ -14,7 +14,7 @@ const SORT_ACTIONS = {
 function TasksTab() {
 
     const [sortBy, setSortBy] = useState();
-    const [openCreateTask, setOpenCreateTask] = useState();
+    const [openCreateTask, setOpenCreateTask] = useState(false);
 
     function handleOpenCreateTask() {
         setOpenCreateTask(true);

@@ -34,7 +34,7 @@ function TaskForm({ closeDialog }) {
         <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[inherit]">
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Task name</label>
-            <input type='text' id='desciption' required placeholder='Folder Name...'
+            <input type='text' id='name' required placeholder='Folder Name...'
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setName(e.target.value)}
             />
@@ -43,8 +43,14 @@ function TaskForm({ closeDialog }) {
                 className="mb-4 h-[100px] w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDescription(e.target.value)}
             />
-            <label className="text-[18px]" htmlFor="name">Date</label>
-            <input type='date' id='desciption' required 
+            <label className="text-[18px]" htmlFor="date">Date</label>
+            <input type='date' id='date' required 
+                className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
+                onChange={(e) => setDate(e.target.value)}
+            />
+
+            <label className="text-[18px]" htmlFor="time">Time</label>
+            <input type='date' id='time' required 
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDate(e.target.value)}
             />

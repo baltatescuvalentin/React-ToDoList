@@ -26,7 +26,7 @@ function Sidebar() {
     }
 
     return (
-        <div className="flex flex-col py-6 px-10 bg-[#f5f5f54d] min-h-full w-[300px] shadow-[4px_0_5px_-2px_rgba(0,_0,_0,_0.7)]">
+        <div className="flex flex-col py-6 px-10 bg-[#f5f5f54d] min-h-full w-[350px] shadow-[4px_0_5px_-2px_rgba(0,_0,_0,_0.7)]">
             <div onClick={() => setCurrentTab('inbox')} 
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <FiInbox size={30} className='ml-2' color='tomato'/>

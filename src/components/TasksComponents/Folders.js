@@ -6,7 +6,7 @@ import { GoTasklist } from "react-icons/go";
 import { ImFolderOpen } from "react-icons/im";
 import { useAuth } from "../../contexts/AuthContext";
 import { firestore } from "../../firebase/firebase";
-import { compareObjects, getFolders } from "../../firebase/functions/FirebaseFunctions";
+import { compareObjects, deleteFolder, getFolders } from "../../firebase/functions/FirebaseFunctions";
 import FoldersDialogCreate from "./dialogs/FoldersDialogCreate";
 
 
@@ -61,7 +61,7 @@ function Folders() {
     }
 
     const Folders = folders?.map((f) => {
-        return <Folder key={f.folderUid} folderName={f.folderName} />
+        return <Folder key={f.folderUid} folderName={f.folderName} folderUid={f.folderUid}/>
     })
     
     return (
@@ -84,14 +84,15 @@ function Folders() {
     )
 }
 
-function Folder({folderName}) {
+function Folder({folderName, folderUid}) {
     return (
         <div className="flex flex-row items-center justify-between w-[inherit]">
             <div className="flex flex-row items-center hover:bg-gray-200 hover:cursor-pointer rounded-lg mx-2 px-2">
                 <ImFolderOpen size={24} color='tomato' />
-                <p className="text-[24px] ml-2">{folderName}</p>
+                <p className="text-[24px] ml-2 overflow-ellipsis">{folderName}</p>
             </div>
-            <button className="flex items-center justify-center hover:bg-gray-200 rounded-full w-8 h-8 mr-[3px]">
+            <button onClick={() => deleteFolder(folderUid)}
+                className="flex items-center justify-center hover:bg-gray-200 rounded-full w-8 h-8 mr-[3px]">
                 <FaTimes size={24} />
             </button>
         </div>
