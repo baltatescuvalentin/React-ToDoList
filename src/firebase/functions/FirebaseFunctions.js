@@ -1,13 +1,6 @@
 import app, { firestore } from "../firebase";
-import { collection, query, where, getDocs, addDoc, orderBy, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, orderBy, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { v4 as uuid4 } from 'uuid';
-import _ from "lodash";
-
-function compareObjects(a, b) {
-    console.log(a);
-    console.log(b);
-    return _.isEqual(a, b);
-}
 
 async function checkIfExistsInUsers(username, email) {
     const q = query(collection(firestore, 'users'), where('username', '==', username), where('email', '==', email));
@@ -50,7 +43,7 @@ async function checkIfFolderExists(folderName) {
     return true;
 }
 
-async function addToTasks(folderName, name, description, date, priority, finished = false, userUid, time) {
+async function addToTasks(folderName, name, description, date, priority, finished = false, userUid, time = '') {
     return await addDoc(collection(firestore, 'tasks'), {
         folderName: folderName,
         taskUid: uuid4(),
@@ -64,15 +57,60 @@ async function addToTasks(folderName, name, description, date, priority, finishe
     })
 }
 
+async function deleteTask(taskUid) {
+    const q = query(collection(firestore, 'tasks'), where('taskUid', '==', taskUid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach( (doc) =>  {
+        const docRef = doc.ref;
+        deleteDoc(docRef);
+    });
+}
+
+async function updateTask(folderName, name, description, date, priority, finished, taskUid, time) {
+    const q = query(collection(firestore, 'tasks'), where('taskUid', '==', taskUid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach( (doc) =>  {
+        const docRef = doc.ref;
+        updateDoc(docRef, {
+            folderName: folderName,
+            name: name,
+            description: description,
+            priority: priority,
+            finished: finished,
+            date: date,
+            time: time,
+        });
+    });
+    // const taskRef = doc(firestore, 'tasks', taskUid);
+    // return await updateDoc(taskRef, {
+    //     folderName: folderName,
+    //     name: name,
+    //     description: description,
+    //     priority: priority,
+    //     finished: finished,
+    //     date: date,
+    //     time: time,
+    // })
+}
+
 async function deleteFolder(folderUid) {
     const q = query(collection(firestore, 'folders'), where('folderUid', '==', folderUid));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach( (doc) =>  {
         const docRef = doc.ref;
-         deleteDoc(docRef);
+        deleteDoc(docRef);
     });
     // const docRef = doc(firestore, 'folders', folderUid);
     // await deleteDoc(docRef);
+}
+
+async function deleteNote(noteUid) {
+    const q = query(collection(firestore, 'notes'), where('noteUid', '==', noteUid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach( (doc) =>  {
+        const docRef = doc.ref;
+        deleteDoc(docRef);
+    });
 }
 
 async function getFolders(uid) {
@@ -115,7 +153,9 @@ export {
     getNotes,
     addToFolders,
     getFolders,
-    compareObjects,
     addToTasks,
     deleteFolder,
+    deleteNote,
+    deleteTask,
+    updateTask,
 }

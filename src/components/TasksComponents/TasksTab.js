@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
+import { TbListDetails } from "react-icons/tb";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTab } from "../../contexts/TasksTabContext";
+import { firestore } from "../../firebase/firebase";
 import TaskDialogCreate from "./dialogs/TaskDialogCreate";
+import Task from "./Task";
+
 
 const SORT_ACTIONS = {
     'TIME_ASC': {column: 'date', order: 'asc'},
@@ -12,7 +17,8 @@ const SORT_ACTIONS = {
 }
 
 function TasksTab() {
-
+    
+    const [tasks, setTasks] = useState([]);
     const [sortBy, setSortBy] = useState();
     const [openCreateTask, setOpenCreateTask] = useState(false);
 
@@ -26,6 +32,24 @@ function TasksTab() {
 
     const { currentUser } = useAuth();
     const { currentTab } = useTab();
+
+    useEffect(() => {
+        const q = query(collection(firestore, "tasks"), where("userUid", "==", currentUser.uid));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const tasksFB = [];
+            querySnapshot.forEach((doc) => {
+                tasksFB.push(doc.data());
+                });
+                
+                setTasks(tasksFB);
+        });
+
+        return () => unsubscribe();
+    }, [currentUser.uid]);
+
+    const Tasks = tasks.map((t) => {
+        return <Task key={t.taskUid} task={t} />
+    })
 
     return (
         <>
@@ -52,6 +76,9 @@ function TasksTab() {
                             Sort by priority descending
                         </option>
                     </select>
+                </div>
+                <div className="flex flex-col w-full mt-4 [&>*]:mb-4">
+                    { Tasks.length && Tasks }
                 </div>
             </div>
         </>

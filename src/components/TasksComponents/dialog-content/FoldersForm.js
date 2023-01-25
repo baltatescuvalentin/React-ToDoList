@@ -20,12 +20,13 @@ function FoldersForm({closeDialog}) {
         try {
             setErrorMsg('')
             await addToFolders(name, currentUser.uid);
+            closeDialog();
+
         }
         catch(e) {
             setErrorMsg(e.message);
         }
 
-        closeDialog();
     }
 
     return (

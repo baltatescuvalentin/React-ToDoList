@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
-import { FaTimes } from "react-icons/fa"
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../contexts/AuthContext";
-import { getNotes } from "../../../firebase/functions/FirebaseFunctions";
+import { firestore } from "../../../firebase/firebase";
+import { deleteNote } from "../../../firebase/functions/FirebaseFunctions";
 
 function NotesGrid() {
 
@@ -10,21 +12,21 @@ function NotesGrid() {
     const { currentUser } = useAuth();
 
     useEffect( () => {
-        async function fetchNotes() {
-            try {
-                const dbNotes = await getNotes(currentUser.uid);
-                console.log(dbNotes);
-                setNotes(dbNotes);
-            }
-            catch {
-                setNotes([]);
-            }
-        }
-        fetchNotes();
-    }, []);
+        const q = query(collection(firestore, "notes"), where("userUid", "==", currentUser.uid));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const notesFB = [];
+            querySnapshot.forEach((doc) => {
+                notesFB.push(doc.data());
+                });
+                
+                setNotes(notesFB);
+        });
+
+        return () => unsubscribe();
+    }, [currentUser.uid]);
 
     const Notes = notes?.map((n) => {
-        return <Note key={n.noteUid} note={n.note} />
+        return <Note key={n.noteUid} note={n.note} noteUid={n.noteUid}/>
     })
 
     return (
@@ -35,10 +37,11 @@ function NotesGrid() {
     )
 }
 
-function Note({note}){
+function Note({note, noteUid}){
     return (
         <div className="flex flex-col border-2 rounded-md p-2 overflow-auto">
-            <div className='flex flex-row justify-end'>
+            <div onClick={() => deleteNote(noteUid)}
+                className='flex flex-row justify-end'>
                 <button className="flex items-center justify-center float-right mb-2 rounded-full hover:bg-gray-200 w-6 h-6">
                     <FaTimes size={18} />
                 </button>

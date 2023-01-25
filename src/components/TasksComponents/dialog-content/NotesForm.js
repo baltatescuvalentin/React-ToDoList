@@ -22,12 +22,12 @@ function NotesForm({closeDialog}) {
         try {
             setErrorMsg('');
             await addToNotes(description, currentUser.uid);
+            closeDialog();
         }
         catch {
             setErrorMsg('Error saving the note. Try again!')
         }
 
-        closeDialog();
     }
 
     return (

@@ -1,21 +1,29 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTab } from '../../../contexts/TasksTabContext';
-import { addToTasks } from '../../../firebase/functions/FirebaseFunctions';
+import { addToTasks, updateTask } from '../../../firebase/functions/FirebaseFunctions';
 
+function TaskFormUpdate({task, closeDialog }) {
 
-function TaskForm({ closeDialog }) {
-
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState();
-    const [time, setTime] = useState('');
-    const [priority, setPriority] = useState();
+    const [name, setName] = useState(task.name);
+    const [description, setDescription] = useState(task.description);
+    const [date, setDate] = useState(task.date);
+    const [time, setTime] = useState(task.time);
+    const [priority, setPriority] = useState(task.priority);
+    const [finished, setFinished] = useState(task.finished);
     const [errorMsg, setErrorMsg] = useState('');
     
+    useEffect(() => {
+        setPriority(task.priority);
+        setName(task.name);
+        setDescription(task.description);
+        setDate(task.date);
+        setTime(task.time);
+        setFinished(task.finished);
+    }, [])
+
     const { currentTab } = useTab();
-    const { currentUser } = useAuth();
 
     function validateForm() {
         return name && date && priority;
@@ -26,11 +34,11 @@ function TaskForm({ closeDialog }) {
         
         try {
             setErrorMsg('')
-            await addToTasks(currentTab, name, description, date, priority, false, currentUser.uid, time);
+            await updateTask(currentTab, name, description, date, priority, finished, task.taskUid, time);
             closeDialog();
         }
         catch {
-            setErrorMsg('Error creating the task. Try again!');
+            setErrorMsg('Error updating the task. Try again!');
         }
 
     }
@@ -39,23 +47,23 @@ function TaskForm({ closeDialog }) {
         <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[inherit]">
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Task name</label>
-            <input type='text' id='name' required placeholder='Task Name...'
+            <input type='text' id='name' required value={task.name}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setName(e.target.value)}
             />
             <label className="text-[18px]" htmlFor="description">Description</label>
-            <textarea id='desciption'  placeholder='Description...'
+            <textarea id='desciption' value={task.description}
                 className="mb-4 h-[100px] w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDescription(e.target.value)}
             />
             <label className="text-[18px]" htmlFor="date">Date</label>
-            <input type='date' id='date' required 
+            <input type='date' id='date' required value={task.date}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDate(e.target.value)}
             />
 
             <label className="text-[18px]" htmlFor="time">Time</label>
-            <input type='time' id='time' 
+            <input type='time' id='time' value={task.time}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setTime(e.target.value)}
             />
@@ -78,13 +86,16 @@ function TaskForm({ closeDialog }) {
                     High
                 </div>
             </div>
+            <label className="flex flex-row items-center text-[30px] mb-2" htmlFor="finished"> Finished
+                <input onChange={(e) => setFinished(e.target.checked)}  className="h-[30px] w-[30px] ml-4" defaultChecked={finished} type='checkbox' />
+            </label>
             { !validateForm() && <p className="text-[18px] mb-2 font-bold text-red-500">Name, date and priority are required!</p>}
             <input type="submit" 
                     disabled={validateForm() ? false : true} 
                     className={`text-[24px] bg-green-400 rounded-lg text-white  h-10 ${validateForm() && 'hover:cursor-pointer'} ${validateForm() ? 'bg-green-400 shadow' : 'bg-gray-400'}`} 
-                    value="Add new task!"/> 
+                    value="Update task!"/> 
         </form>
     )
 }
 
-export default TaskForm;
+export default TaskFormUpdate;
