@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import ResetPassword from './components/ResetPassword';
 import Wrapper from './components/TasksComponents/Wrapper';
 import { AuthProvider } from './contexts/AuthContext';
+import Error from './components/Error';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='signin' element={<Signin />} />
             <Route path='resetpassword' element={<ResetPassword />} />
             <Route path='tasks' element={<Wrapper />} />
+            <Route path='*' element={<Error />} />
           </Route>
         </Routes>
       </AuthProvider>

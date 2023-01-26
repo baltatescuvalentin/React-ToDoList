@@ -14,14 +14,14 @@ function TaskFormUpdate({task, closeDialog }) {
     const [finished, setFinished] = useState(task.finished);
     const [errorMsg, setErrorMsg] = useState('');
     
-    useEffect(() => {
-        setPriority(task.priority);
-        setName(task.name);
-        setDescription(task.description);
-        setDate(task.date);
-        setTime(task.time);
-        setFinished(task.finished);
-    }, [])
+    // useEffect(() => {
+    //     setPriority(task.priority);
+    //     setName(task.name);
+    //     setDescription(task.description);
+    //     setDate(task.date);
+    //     setTime(task.time);
+    //     setFinished(task.finished);
+    // }, [])
 
     const { currentTab } = useTab();
 

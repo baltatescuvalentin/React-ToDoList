@@ -81,16 +81,17 @@ async function updateTask(folderName, name, description, date, priority, finishe
             time: time,
         });
     });
-    // const taskRef = doc(firestore, 'tasks', taskUid);
-    // return await updateDoc(taskRef, {
-    //     folderName: folderName,
-    //     name: name,
-    //     description: description,
-    //     priority: priority,
-    //     finished: finished,
-    //     date: date,
-    //     time: time,
-    // })
+}
+
+async function updateFinishedTask(finished, taskUid) {
+    const q = query(collection(firestore, 'tasks'), where('taskUid', '==', taskUid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach( (doc) =>  {
+        const docRef = doc.ref;
+        updateDoc(docRef, {
+            finished: finished,
+        });
+    });
 }
 
 async function deleteFolder(folderUid) {
@@ -158,4 +159,5 @@ export {
     deleteNote,
     deleteTask,
     updateTask,
+    updateFinishedTask,
 }

@@ -8,7 +8,17 @@ module.exports = {
       'sm': {'max': '639px'},
       'xl': {'max': '1278px'},
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        goDown: {
+          '0%': { transform: 'scaleY(0)' },
+          '100%': { transform: 'scaleY(1)' }
+        }
+      },
+      animation: {
+        goDownAnimation: 'goDown 1s ease-in-out forwards'
+      }
+    },
   },
   plugins: [],
 }
