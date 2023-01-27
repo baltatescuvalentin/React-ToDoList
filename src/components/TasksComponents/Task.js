@@ -25,7 +25,6 @@ function Task({task}) {
         parseDate = Date.parse(task.date + "T" + task.time);
     else parseDate = Date.parse(task.date);
  
-    console.log(parseDate);
     const formattedDate = new Date(parseDate).toLocaleDateString('en-GB', {
         day: '2-digit',
         weekday: 'short',

@@ -30,7 +30,7 @@ function Profile() {
                     <div className='rounded-lg mt-[96px] flex flex-col items-center justify-center border border-gray-300 shadow-md divide-x-0 divide-solid w-36  bg-white absolute'>
                         <div onClick={() => {
                             signout();
-                            goTo('../react-todolist');
+                            goTo('/');
                         }}
                             className='hover:cursor-pointer font-medium text-gray-600 text-2xl m-2'>
                             Sign Out

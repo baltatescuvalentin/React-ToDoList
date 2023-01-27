@@ -22,7 +22,7 @@ export function AuthProvider({children}) {
             throw new Error('User already exists!');
         await createUserWithEmailAndPassword(auth, email, password);
         await addToUsers(username, email);
-        return updateProfile(auth.currentUser, {
+        return await updateProfile(auth.currentUser, {
             displayName: fullname
         })
     }
@@ -32,7 +32,7 @@ export function AuthProvider({children}) {
         if(email === false) 
             throw new Error('Wrong username!');
 
-        return signInWithEmailAndPassword(auth, email, password);
+        return await signInWithEmailAndPassword(auth, email, password);
     }
 
     async function resetpassword(username, newPassword) {
@@ -43,7 +43,7 @@ export function AuthProvider({children}) {
     }
 
     async function signout() {
-        return signOut(auth);
+        return await signOut(auth);
     }
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export function AuthProvider({children}) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     )
 }

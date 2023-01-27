@@ -30,7 +30,7 @@ function Folders() {
         });
 
         return () => unsubscribe();
-    }, [currentUser.uid]);
+    }, [currentUser]);
 
     function handleOpenCreateFolder() {
         setOpenCreateFolder(true);

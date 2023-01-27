@@ -7,18 +7,24 @@ import ResetPassword from './components/ResetPassword';
 import Wrapper from './components/TasksComponents/Wrapper';
 import { AuthProvider } from './contexts/AuthContext';
 import Error from './components/Error';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/react-todolist'>
       <AuthProvider>
         <Routes>
-          <Route path='react-todolist' element={<SharedLayout />}>
+          <Route path='/' element={<SharedLayout />}>
             <Route index element={<HomePage />} />
-            <Route path='signup' element={<Signup />} />
-            <Route path='signin' element={<Signin />} />
+            <Route element={<PublicRoute />} >
+              <Route path='signup' element={<Signup />} />
+              <Route path='signin' element={<Signin />} />
+            </Route>
             <Route path='resetpassword' element={<ResetPassword />} />
-            <Route path='tasks' element={<Wrapper />} />
+            <Route element={<PrivateRoute /> } >
+              <Route path='tasks' element={<Wrapper />} />
+            </Route>  
             <Route path='*' element={<Error />} />
           </Route>
         </Routes>

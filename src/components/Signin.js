@@ -12,6 +12,8 @@ function Signin() {
     const { signin } = useAuth();
     const { currentUser } = useAuth();
 
+    let navigator = useNavigate();
+
     function validInputs() {
         return username && password;
     }
@@ -22,14 +24,15 @@ function Signin() {
         try {
             setErrorMsg('');
             await signin(username, password);
-            console.log(currentUser.uid);
+            console.log('signin');
+            console.log(currentUser);
+            navigator('/tasks');
         }
-        catch {
-            setErrorMsg('Wrong password!');
+        catch(e) {
+            setErrorMsg(e.message || 'Wrong password!');
         }
     }
 
-    let navigator = useNavigate();
 
     return (
         <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mt-16 ml-auto mr-auto">

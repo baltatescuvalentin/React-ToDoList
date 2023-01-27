@@ -23,7 +23,7 @@ function NotesGrid() {
         });
 
         return () => unsubscribe();
-    }, [currentUser.uid]);
+    }, [currentUser]);
 
     const Notes = notes?.map((n) => {
         return <Note key={n.noteUid} note={n.note} noteUid={n.noteUid}/>
