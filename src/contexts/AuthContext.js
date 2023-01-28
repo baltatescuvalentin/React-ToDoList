@@ -37,9 +37,10 @@ export function AuthProvider({children}) {
 
     async function resetpassword(username, newPassword) {
         const email = await findEmailWithUsername(username);
-        const user = auth.getUserByEmail(email);
+        const user = currentUser;
         console.log(user);
-        //return updatePassword(auth.currentUser, newPassword)
+        return await updatePassword(user, newPassword);
+        // return await signInWithEmailAndPassword(auth, email, newPassword);
     }
 
     async function signout() {

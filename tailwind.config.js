@@ -13,10 +13,20 @@ module.exports = {
         goDown: {
           '0%': { transform: 'scaleY(0)' },
           '100%': { transform: 'scaleY(1)' }
+        },
+        goRight: {
+          '0%': { transform: 'scaleX(0)'},
+          '100%': { transform: 'scaleX(1)'}
+        },
+        goLeft: {
+          '0%': { transform: 'scaleX(1)'},
+          '100%': { transform: 'scaleX(0)'}
         }
       },
       animation: {
-        goDownAnimation: 'goDown 1s ease-in-out forwards'
+        goDownAnimation: 'goDown 1s ease-in-out forwards',
+        goRightAnimation: 'goRight 1s ease-in forwards',
+        goLeftAnimation: 'goLeft 1s ease-in forwards',
       }
     },
   },

@@ -4,14 +4,16 @@ import { FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../contexts/AuthContext";
 import { firestore } from "../../../firebase/firebase";
 import { deleteNote } from "../../../firebase/functions/FirebaseFunctions";
+import Spinner from "../../../utils/Spinner";
 
 function NotesGrid() {
 
     const [notes, setNotes] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const { currentUser } = useAuth();
 
     useEffect( () => {
+        setLoading(true);
         const q = query(collection(firestore, "notes"), where("userUid", "==", currentUser.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const notesFB = [];
@@ -20,6 +22,7 @@ function NotesGrid() {
                 });
                 
                 setNotes(notesFB);
+                setLoading(false);
         });
 
         return () => unsubscribe();
@@ -30,10 +33,13 @@ function NotesGrid() {
     })
 
     return (
-        <div className="grid grid-cols-4 auto-rows-min p-2 gap-2">
-            {Notes.length ? Notes : ''}
-        </div>
-
+        <>
+            {   loading ? <Spinner /> :
+                <div className="grid grid-cols-4 auto-rows-min p-2 gap-2">
+                    {Notes.length ? Notes : ''}
+                </div>
+            }
+        </>
     )
 }
 

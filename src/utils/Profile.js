@@ -19,7 +19,7 @@ function Profile() {
     }
 
     return (
-        <div className='flex flex-col items-center justify-center -translate-x-10' onMouseEnter={changeHover} onMouseLeave={changeHover}>
+        <div className='flex flex-col items-center justify-center -translate-x-12' onMouseEnter={changeHover} onMouseLeave={changeHover}>
             <MdOutlineAccountCircle color='#FFFAFA' size={56} />
             {
                 hover ? !currentUser ?
@@ -27,13 +27,19 @@ function Profile() {
                         <div className='hover:cursor-pointer hover:text-gray-400 mb-1 font-medium text-gray-600 text-2xl' onClick={() => goTo('signin')}>Sign In</div>
                         <div className='hover:cursor-pointer hover:text-gray-400 font-medium text-gray-600 text-2xl' onClick={() => goTo('signup')}>Sign up</div>
                     </div> :
-                    <div className='rounded-lg mt-[96px] flex flex-col items-center justify-center border border-gray-300 shadow-md divide-x-0 divide-solid w-36  bg-white absolute'>
+                    <div className='rounded-lg mt-[140px] -translate-x-2 flex flex-col items-center justify-center border border-gray-300 shadow-md divide-x-0 divide-solid w-52 bg-white absolute'>
                         <div onClick={() => {
                             signout();
                             goTo('/');
                         }}
                             className='hover:cursor-pointer font-medium text-gray-600 text-2xl m-2'>
                             Sign Out
+                        </div>
+                        <div onClick={() => {
+                            goTo('/resetpassword');
+                        }}
+                            className='hover:cursor-pointer font-medium text-gray-600 text-2xl m-2'>
+                            Reset Password
                         </div>
                     </div>
                     : ''

@@ -5,6 +5,7 @@ import { TbListDetails } from "react-icons/tb";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTab } from "../../contexts/TasksTabContext";
 import { firestore } from "../../firebase/firebase";
+import TaskSkeleton from "../../utils/TaskSkeleton";
 import TaskDialogCreate from "./dialogs/TaskDialogCreate";
 import Task from "./Task";
 
@@ -20,8 +21,8 @@ function TasksTab() {
     
     const [tasks, setTasks] = useState([]);
     const [tab, setTab] = useState('inbox');
-    const [sortBy, setSortBy] = useState('DATE_ASC');
-    console.log(sortBy);
+    const [sortBy, setSortBy] = useState();
+    const [loading, setLoading] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
 
     function handleOpenCreateTask() {
@@ -56,11 +57,13 @@ function TasksTab() {
     }
 
     useEffect(() => {
+        setLoading(true);
         let q = null;
         if(tab === 'important') {
             q = query(collection(firestore, "tasks"), 
                 where("userUid", "==", currentUser.uid), 
-                where('priority', '==', 1));
+                where('priority', '==', 1),
+                where('finished', '==', false));
         }
         else if(tab === 'finished') {
             q = query(collection(firestore, "tasks"), 
@@ -73,19 +76,22 @@ function TasksTab() {
 
             q = query(collection(firestore, "tasks"), 
                 where("userUid", "==", currentUser.uid), 
-                where('date', '==', fDate));
+                where('date', '==', fDate),
+                where('finished', '==', false));
         }
         else if(tab === 'upcoming') {
             const currDate = new Date().toISOString();
             const fDate = currDate.split('T')[0];
 
-            q = query(collection(firestore, "tasks"), 
-                where("userUid", "==", currentUser.uid), 
+            q = query(collection(firestore, "tasks"),
+                where("userUid", "==", currentUser.uid),
+                where('finished', '==', false), 
                 where('date', '>', fDate));
         }
         else q = query(collection(firestore, "tasks"), 
             where("userUid", "==", currentUser.uid), 
-            where('folderName', '==', tab));
+            where('folderName', '==', tab),
+            where('finished', '==', false));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const tasksFB = [];
             querySnapshot.forEach((doc) => {
@@ -104,17 +110,18 @@ function TasksTab() {
                 // }
                 console.log(tasksFB);
                 setTasks(tasksFB);
+                setLoading(false);
         });
 
         return () => unsubscribe();
-    }, [tab, sortBy]);
+    }, [tab]);
 
-    // useEffect(() =>{
-    //     setTab(currentTab);
-    //     if(currentTab === 'important')
-    //         setSortBy(SORT_ACTIONS.PRIORITY_ASC);
-    //     else setSortBy(SORT_ACTIONS.DATE_ASC);
-    // }, [currentTab]);
+    useEffect(() =>{
+        setTab(currentTab);
+        if(currentTab === 'important')
+            setSortBy('PRIORITY_ASC');
+        else setSortBy('DATE_ASC');
+    }, [currentTab]);
 
     // useEffect(() => {
     //     if(sortBy.column === 'date') {
@@ -144,14 +151,14 @@ function TasksTab() {
             <TaskDialogCreate open={openCreateTask} closeDialog={handleCloseCreateTask} />
             <div className="flex flex-col pt-6 px-[5%] w-full">
                 <p className="text-[30px]">{ currentUser.displayName || 'test'} 's { tab } tasks</p>
-                <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-row justify-between items-center xl:flex-col xl:items-start xl:[&>*]:mb-2">
                     { correctTab() && 
                     <div onClick={handleOpenCreateTask}
                         className={`flex flex-row  items-center float-right px-2 rounded-lg hover:cursor-pointer hover:bg-gray-200 `}>
                         <BsPlusCircleFill size={20} color='tomato' />
                         <p className="ml-2 text-[24px]"> Add new task!</p>
                     </div> }
-                    <select value={sortBy}
+                    <select value={sortBy === 'DATE_ASC' ? 'Sort by date ascending' : sortBy === 'DATE_DESC' ? 'Sort by date descending' : sortBy === 'PRIORITY_ASC' ? 'Sort by priority ascending' : 'Sort by priority descending'}
                         onChange={handleSelect}
                         className='rounded-md text-[20px] shadow-md'>
                         <option value='DATE_ASC'>
@@ -168,9 +175,11 @@ function TasksTab() {
                         </option>
                     </select>
                 </div>
-                <div className="flex flex-col w-full mt-4 [&>*]:mb-4">
-                    { Tasks.length ? Tasks : null }
-                </div>
+                {   loading ? <TaskSkeleton /> :
+                    <div className="flex flex-col w-full mt-4 [&>*]:mb-4">
+                        { Tasks.length ? Tasks : null }
+                    </div>
+                }
             </div>
         </>
     )

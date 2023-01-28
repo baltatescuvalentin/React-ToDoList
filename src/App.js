@@ -21,8 +21,9 @@ function App() {
               <Route path='signup' element={<Signup />} />
               <Route path='signin' element={<Signin />} />
             </Route>
-            <Route path='resetpassword' element={<ResetPassword />} />
+            
             <Route element={<PrivateRoute /> } >
+              <Route path='resetpassword' element={<ResetPassword />} />
               <Route path='tasks' element={<Wrapper />} />
             </Route>  
             <Route path='*' element={<Error />} />

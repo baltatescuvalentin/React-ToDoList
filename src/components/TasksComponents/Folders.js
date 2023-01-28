@@ -8,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useTab } from "../../contexts/TasksTabContext";
 import { firestore } from "../../firebase/firebase";
 import { deleteFolder } from "../../firebase/functions/FirebaseFunctions";
+import Spinner from "../../utils/Spinner";
 import FoldersDialogCreate from "./dialogs/FoldersDialogCreate";
 
 
@@ -15,10 +16,11 @@ function Folders() {
 
     const [openCreateFolder, setOpenCreateFolder] = useState(false);
     const [folders, setFolders] = useState([]);
+    const [loading, setLoading] = useState(false);
     const { currentUser } = useAuth();
     
     useEffect(() => {
-
+        setLoading(true);
         const q = query(collection(firestore, "folders"), where("userUid", "==", currentUser.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const foldersFB = [];
@@ -27,6 +29,8 @@ function Folders() {
                 });
                 
                 setFolders(foldersFB);
+
+                setLoading(false)
         });
 
         return () => unsubscribe();
@@ -57,9 +61,11 @@ function Folders() {
                     <BsPlusCircleFill size={36} color='tomato'/>
                 </button>
             </div>
-            <div className="flex flex-col pl-4 mt-2">
-                {Folders.length ? Folders : ''}
-            </div>
+            {   loading ? <Spinner /> :
+                <div className="flex flex-col pl-4 mt-2">
+                    {Folders.length ? Folders : ''}
+                </div>
+            }
         </>
     )
 }

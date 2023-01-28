@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { RxDotFilled } from 'react-icons/rx';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -21,16 +22,18 @@ function ResetPassword() {
     const [errorMsg, setErrorMsg] = useState('');
 
     const { resetpassword } = useAuth();
+    const navigator = useNavigate();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         try {
             setErrorMsg('');
-            resetpassword(username, password);
+            await resetpassword(username, password);
+            navigator('/signin');
         }
-        catch {
-            setErrorMsg('Error resetting password!')
+        catch(e) {
+            setErrorMsg(e.message || 'Error resetting password!')
         }
     }
 

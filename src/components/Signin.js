@@ -67,11 +67,11 @@ function Signin() {
                     value="Sign in!"/> 
             </form>
             <div className="border-b-2 border-black m-4"></div>
-            <div className="flex flex-col items-center justify-center">
+            {/* <div className="flex flex-col items-center justify-center">
                 <p className="text-xl">Forgot your password?</p>
                 <p className="text-xl text-green-400 hover:cursor-pointer" onClick={() => navigator('../resetpassword')}>Reset Password!</p>
-            </div>
-            <div className="border-b-2 border-black m-4"></div>
+            </div> */}
+            {/* <div className="border-b-2 border-black m-4"></div> */}
             <div className="flex flex-col items-center justify-center">
                 <p className="text-xl">Don't have an account?</p>
                 <p className="text-xl text-green-400 hover:cursor-pointer" onClick={() => navigator('../signup')}>Sign Up!</p>

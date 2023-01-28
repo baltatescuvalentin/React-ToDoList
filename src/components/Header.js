@@ -14,8 +14,8 @@ function Header() {
                 <img className='h-16 w-18 ml-10 mr-2' src={logo}/>
                 <p className='text-7xl text-white font-bold sm:hidden'>To-Do List</p>
             </div>
-            <div className='flex flex-row items-center'>
-                <Link to='tasks' className={` ${currentUser ? 'block' : 'hidden'} mr-12 hover:curosr-pointer text-white text-[24px] font-semibold`}>
+            <div className='flex flex-row items-center sm:hidden'>
+                <Link to='tasks' className={` ${currentUser ? 'block' : 'hidden'} mr-16 hover:curosr-pointer text-white text-[24px] font-semibold`}>
                     Dashboard
                 </Link>
                 <Profile />

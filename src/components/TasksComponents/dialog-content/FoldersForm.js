@@ -30,7 +30,7 @@ function FoldersForm({closeDialog}) {
     }
 
     return (
-        <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[500px]">
+        <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[500px] sm:w-[inherit]">
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Folder Name</label>
             <input type='text' id='desciption' required placeholder='Folder Name...'

@@ -5,7 +5,8 @@ import FoldersForm from "../dialog-content/FoldersForm";
 
 function FoldersDialogCreate({closeDialog, open}) {
     return (
-        <Dialog open={open}>
+        <Dialog className='sm:m-auto'
+            open={open}>
             <DialogTitleCustom closeDialog={closeDialog}/>
             <DialogContent>
                 <FoldersForm closeDialog={closeDialog}/>
@@ -18,7 +19,7 @@ function DialogTitleCustom({closeDialog}) {
     return (
 
         <DialogTitle className='flex flex-row items-center justify-between'>
-            <p className="text-[40px]">
+            <p className="text-[40px] sm:text-[20px] font-semibold">
                 Create New Task Folder
             </p>
             <button onClick={closeDialog} className="flex items-center justify-center rounded-full hover:bg-gray-200 w-10 h-10">
