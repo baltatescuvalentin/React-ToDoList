@@ -11,3 +11,17 @@ body {
 }
 
 
+.lineThrough {
+  position: relative;  
+}
+
+.lineThrough:after {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1px;
+  background: black;
+  content: "";
+  width: 100%;
+  display: block;
+}

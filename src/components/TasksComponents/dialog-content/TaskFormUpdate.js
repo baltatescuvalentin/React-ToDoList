@@ -71,17 +71,17 @@ function TaskFormUpdate({task, closeDialog }) {
             <div className='flex flex-row items-center mb-2'>
                 <p className='text-[26px] mr-6'>Priority</p>
                 <div onClick={() => setPriority(3)}
-                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-green-500 text-green-500
+                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-green-500
                     ${priority === 3 && 'text-black bg-green-500'} `}>
                     Low
                 </div>
                 <div onClick={() => setPriority(2)}
-                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-yellow-500 text-yellow-500
+                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-yellow-500
                     ${priority === 2 && 'text-black bg-yellow-500'} `}>
                     Medium
                 </div>
                 <div onClick={() => setPriority(1)}
-                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-red-500 text-red-500
+                    className={`flex flex-row items-center justify-center w-[100px] rounded-lg font-semibold mx-6 text-[20px] border-2 hover:cursor-pointer border-red-500 
                     ${priority === 1 && 'text-black bg-red-500'} `}>
                     High
                 </div>

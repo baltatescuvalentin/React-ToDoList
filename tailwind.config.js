@@ -24,7 +24,7 @@ module.exports = {
         }
       },
       animation: {
-        goDownAnimation: 'goDown 1s ease-in-out forwards',
+        goDownAnimation: 'max-height 1s ease-in',
         goRightAnimation: 'goRight 1s ease-in forwards',
         goLeftAnimation: 'goLeft 1s ease-in forwards',
       }

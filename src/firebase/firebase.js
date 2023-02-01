@@ -18,29 +18,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const firestore = getFirestore(app);
-
-// async function addToUsers(username, email) {
-//   await addDoc(collection(firestore, 'users'), {
-//       username: username,
-//       email: email,
-//   });
-// }
-
-// async function run() {
-//   try {
-//     const exists = await checkIfExistsInUsers('test1', 'test1');
-//     console.log(exists);
-//     if(exists === false)
-//      await addToUsers('test1', 'test1');
-//     else console.log('user exists');
-
-//   }
-//   catch {
-//     console.log('error');
-//   }
-// }
-
-// run(); 
-
 export const auth = getAuth(app);
 export default app;
