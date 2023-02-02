@@ -1,5 +1,5 @@
 import { collection, onSnapshot, query, where, orderBy } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTab } from "../../contexts/TasksTabContext";
@@ -21,7 +21,7 @@ function TasksTab() {
     const [tasks, setTasks] = useState([]);
     const [tab, setTab] = useState('inbox');
     const [sortBy, setSortBy, sortByRef] = useStateRef('DATE_ASC');
-    let sortByAux = sortByRef.current;
+    const sortByRefHook = useRef(sortByRef.current);
     const [loading, setLoading] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
 
@@ -106,14 +106,14 @@ function TasksTab() {
         });
 
         return () => unsubscribe();
-    }, [tab]);
+    }, [tab, currentUser.uid]);
 
     useEffect(() =>{
         setTab(currentTab);
     }, [currentTab]);
 
     useEffect(() => {
-        sortByAux = 'DATE_ASC';
+        sortByRefHook.current = 'DATE_ASC';
     }, [tab]);
     
 
@@ -122,13 +122,13 @@ function TasksTab() {
     });
 
     function sortByCriteria() {
-        if(SORT_ACTIONS[sortByAux].column === 'date') {
-            if(SORT_ACTIONS[sortByAux].order === 'asc')
+        if(SORT_ACTIONS[sortByRefHook.current].column === 'date') {
+            if(SORT_ACTIONS[sortByRefHook.current].order === 'asc')
                 tasks.sort(compareDateAsc);
             else tasks.sort(compareDateDesc)
         }
         else {
-            if(SORT_ACTIONS[sortByAux].order === 'asc')
+            if(SORT_ACTIONS[sortByRefHook.current].order === 'asc')
                 tasks.sort(comparePriorityAsc);
             else tasks.sort(comparePriorityDesc);
         }
@@ -157,7 +157,7 @@ function TasksTab() {
  
     function handleSelect(e) {
         setSortBy(e.currentTarget.value);
-        sortByAux = sortByRef.current;
+        sortByRefHook.current = sortByRef.current;
         sortByCriteria();
     }
 
@@ -165,7 +165,7 @@ function TasksTab() {
         <>
             <TaskDialogCreate open={openCreateTask} closeDialog={handleCloseCreateTask} />
             <div className="flex flex-col pt-6 px-[5%] w-full">
-                <p className="text-[30px]">{ currentUser.displayName || 'test'} 's { tab } tasks</p>
+                <p className="text-[30px]">{ currentUser.displayName || 'User'} 's { tab } tasks</p>
                 <div className="flex flex-row justify-between items-center xl:flex-col xl:items-start xl:[&>*]:mb-2">
                     { correctTab() && 
                     <div onClick={handleOpenCreateTask}
@@ -173,7 +173,7 @@ function TasksTab() {
                         <BsPlusCircleFill size={20} color='tomato' />
                         <p className="ml-2 text-[24px]"> Add new task!</p>
                     </div> }
-                    <select value={sortByAux}
+                    <select value={sortByRefHook.current}
                         onChange={(e) => handleSelect(e)}
                         className='rounded-md text-[20px] shadow-md'>
                         <option value='DATE_ASC'>

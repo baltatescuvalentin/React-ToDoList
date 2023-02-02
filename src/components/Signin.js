@@ -24,8 +24,6 @@ function Signin() {
         try {
             setErrorMsg('');
             await signin(username, password);
-            console.log('signin');
-            console.log(currentUser);
             navigator('/tasks');
         }
         catch(e) {

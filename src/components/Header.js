@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../utils/images/to-do-list.png';
 import Profile from '../utils/Profile';
@@ -7,10 +7,12 @@ import Profile from '../utils/Profile';
 function Header() {
 
     const { currentUser } = useAuth();
+    const navigator = useNavigate();
 
     return (
         <div className='flex flex-row items-center justify-between h-32 w-full bg-red-400 p-5 gap-2'>
-            <div className='flex flex-row items-center'>
+            <div onClick={() => navigator('/')}
+                className='flex flex-row items-center hover:cursor-pointer'>
                 <img className='h-16 w-18 ml-10 mr-2' src={logo}/>
                 <p className='text-7xl text-white font-bold sm:hidden'>To-Do List</p>
             </div>
