@@ -7,6 +7,7 @@ import { firestore } from "../../firebase/firebase";
 import TaskSkeleton from "../../utils/TaskSkeleton";
 import TaskDialogCreate from "./dialogs/TaskDialogCreate";
 import Task from "./Task";
+import useStateRef from "react-usestateref";
 
 const SORT_ACTIONS = {
     DATE_ASC: {column: 'date', order: 'asc'},
@@ -19,8 +20,8 @@ function TasksTab() {
     
     const [tasks, setTasks] = useState([]);
     const [tab, setTab] = useState('inbox');
-    const [sortBy, setSortBy] = useState('DATE_ASC');
-    const [sortByAux, setSortByAux] = useState(sortBy);
+    const [sortBy, setSortBy, sortByRef] = useStateRef('DATE_ASC');
+    let sortByAux = sortByRef.current;
     const [loading, setLoading] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
 
@@ -48,11 +49,11 @@ function TasksTab() {
     }
 
     function compareDateDesc(a, b) {
-        return a.date > b.date ? 1 : (a.date < b.date ? -1 : 0);
+        return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0);
     }
 
     function compareDateAsc(a, b) {
-        return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0);
+        return a.date > b.date ? 1 : (a.date < b.date ? -1 : 0);
     }
 
     useEffect(() => {
@@ -62,12 +63,14 @@ function TasksTab() {
             q = query(collection(firestore, "tasks"), 
                 where("userUid", "==", currentUser.uid), 
                 where('priority', '==', 1),
-                where('finished', '==', false));
+                where('finished', '==', false),
+                orderBy('date', 'asc'));
         }
         else if(tab === 'finished') {
             q = query(collection(firestore, "tasks"), 
                 where("userUid", "==", currentUser.uid), 
-                where('finished', '==', true));
+                where('finished', '==', true),
+                orderBy('date', 'asc'));
         }
         else if(tab === 'today') {
             const currDate = new Date().toISOString();
@@ -85,18 +88,19 @@ function TasksTab() {
             q = query(collection(firestore, "tasks"),
                 where("userUid", "==", currentUser.uid),
                 where('finished', '==', false), 
-                where('date', '>', fDate));
+                where('date', '>', fDate),
+                orderBy('date', 'asc'));
         }
         else q = query(collection(firestore, "tasks"), 
             where("userUid", "==", currentUser.uid), 
             where('folderName', '==', tab),
-            where('finished', '==', false));
+            where('finished', '==', false),
+            orderBy('date', 'asc'));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const tasksFB = [];
             querySnapshot.forEach((doc) => {
                 tasksFB.push(doc.data());
                 });
-                console.log(tasksFB);
                 setTasks(tasksFB);
                 setLoading(false);
         });
@@ -106,18 +110,18 @@ function TasksTab() {
 
     useEffect(() =>{
         setTab(currentTab);
-        setSortBy('DATE_ASC');
     }, [currentTab]);
-    
+
     useEffect(() => {
-        setSortByAux(sortBy)
-    }, [sortBy])
+        sortByAux = 'DATE_ASC';
+    }, [tab]);
+    
 
     let Tasks = tasks.map((t) => {
         return <Task key={t.taskUid} task={t} />
     });
 
-    useEffect(() => {
+    function sortByCriteria() {
         if(SORT_ACTIONS[sortByAux].column === 'date') {
             if(SORT_ACTIONS[sortByAux].order === 'asc')
                 tasks.sort(compareDateAsc);
@@ -130,14 +134,31 @@ function TasksTab() {
         }
 
         setTasks(tasks);
+    }
 
-    }, [sortBy]);
+    // useEffect(() => {
+    //     if(SORT_ACTIONS[sortByAux].column === 'date') {
+    //         if(SORT_ACTIONS[sortByAux].order === 'asc')
+    //             tasks.sort(compareDateAsc);
+    //         else tasks.sort(compareDateDesc)
+    //     }
+    //     else {
+    //         if(SORT_ACTIONS[sortByAux].order === 'asc')
+    //             tasks.sort(comparePriorityAsc);
+    //         else tasks.sort(comparePriorityDesc);
+    //     }
+
+    //     console.log(tasks);
+    //     setTasks(tasks);
+    //     handleUpdate();
+
+    // }, [sortByAux]);
 
  
     function handleSelect(e) {
         setSortBy(e.currentTarget.value);
-        console.log(sortBy);
-        console.log(SORT_ACTIONS[sortBy].column, SORT_ACTIONS[sortBy].order);
+        sortByAux = sortByRef.current;
+        sortByCriteria();
     }
 
     return (
@@ -152,8 +173,7 @@ function TasksTab() {
                         <BsPlusCircleFill size={20} color='tomato' />
                         <p className="ml-2 text-[24px]"> Add new task!</p>
                     </div> }
-                    {/* value={sortBy === 'DATE_ASC' ? 'Sort by date ascending' : sortBy === 'DATE_DESC' ? 'Sort by date descending' : sortBy === 'PRIORITY_ASC' ? 'Sort by priority ascending' : 'Sort by priority descending'} */}
-                    <select value={sortBy}
+                    <select value={sortByAux}
                         onChange={(e) => handleSelect(e)}
                         className='rounded-md text-[20px] shadow-md'>
                         <option value='DATE_ASC'>
