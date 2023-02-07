@@ -7,33 +7,45 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
     return (
-        <div className='flex flex-col items-center justify-center mt-14 [&>*]:m-3 '>
+        <div className='flex flex-col items-center justify-center mt-14 [&>*]:mx-3 [&>*]:my-[8px]'>
             <p className='text-6xl font-semibold text-center sm:text-2xl'>Welcome to To-Do List!</p>
+            <p className='hidden xl:block text-center text-2xl'> Go to  
+                <Link to='tasks'
+                    className='hover:cursor-pointer font-semibold text-2xl border-b-4 border-gray-500 ml-2'>
+                    Dashboard
+                </Link>
+            </p>
             <p className='text-2xl text-center sm:text-xl'>This is an app that let's you store and keep track of activities you want to do.</p>
             <p className='text-3xl text-center font-semibold sm:text-xl'>What it is offering:</p>
             <div className='flex flex-row sm:justify-start  items-center [&>*]:mr-2'>
-                <div className='w-[26px]'>
+                <div className='w-[26px] sm:hidden'>
                     <FiThumbsUp size={24} className='stroke-green-500' />
                 </div>
                 <p className='text-2xl text-center sm:text-lg'>Storing the tasks on your personal account!</p>
             </div>
             <div className='flex flex-row sm:justify-start  items-center [&>*]:mr-2'>
-                <div className='w-[26px]'>
+                <div className='w-[26px] sm:hidden'>
                     <FiThumbsUp size={24} className='stroke-green-500' />
                 </div>
                 <p className='text-2xl text-center sm:text-lg'>Organising the tasks however you like!</p>
             </div>
             <div className='flex flex-row sm:justify-start  items-center [&>*]:mr-2'>
-                <div className='w-[26px]'>
+                <div className='w-[26px] sm:hidden'>
                     <FiThumbsUp size={24} className='stroke-green-500' />
                 </div>
                 <p className='text-2xl text-center sm:text-lg'>Easy to use interface!</p>
             </div>
             <div className='flex flex-row sm:justify-start  items-center [&>*]:mr-2'>
-                <div className='w-[26px]'>
+                <div className='w-[26px] sm:hidden'>
                     <FiThumbsUp size={24} className='stroke-green-500' />
                 </div>
                 <p className='text-2xl text-center sm:text-lg'>Support for notes!</p>
+            </div>
+            <div className='flex flex-row sm:justify-start  items-center [&>*]:mr-2'>
+                <div className='w-[26px] sm:hidden'>
+                    <FiThumbsUp size={24} className='stroke-green-500' />
+                </div>
+                <p className='text-2xl text-center sm:text-lg'>Mobile interface!</p>
             </div>
             <div className='flex flex-row items-start [&>*]:mr-2 [&>p]:sm:text-lg'>
                 <p className='text-3xl text-center font-semibold'>Create an account right now!</p>

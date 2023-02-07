@@ -35,7 +35,7 @@ function NotesGrid() {
     return (
         <>
             {   loading ? <Spinner /> :
-                <div className="grid grid-cols-4 auto-rows-min p-2 gap-2">
+                <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] auto-rows-min p-2 gap-2">
                     {Notes.length ? Notes : ''}
                 </div>
             }

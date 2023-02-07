@@ -10,7 +10,6 @@ function Signin() {
     const [errorMsg, setErrorMsg] = useState('');
 
     const { signin } = useAuth();
-    const { currentUser } = useAuth();
 
     let navigator = useNavigate();
 
@@ -33,7 +32,7 @@ function Signin() {
 
 
     return (
-        <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 px-8 bg-gray-50 w-[500px] mt-16 ml-auto mr-auto">
+        <div className="shadow-2xl border-2 rounded-lg border-red-300 py-5 sm:px-4 px-8 bg-gray-50 w-[500px] sm:w-[350px] mt-16 ml-auto mr-auto">
             <p className="text-4xl font-semibold mb-4 text-gray-700">Sign In!</p>
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <form onSubmit={handleSubmit} className="flex flex-col">

@@ -8,6 +8,7 @@ import TaskSkeleton from "../../utils/TaskSkeleton";
 import TaskDialogCreate from "./dialogs/TaskDialogCreate";
 import Task from "./Task";
 import useStateRef from "react-usestateref";
+import Menu from "../../utils/Menu";
 
 const SORT_ACTIONS = {
     DATE_ASC: {column: 'date', order: 'asc'},
@@ -34,7 +35,7 @@ function TasksTab() {
     }
 
     const { currentUser } = useAuth();
-    const { currentTab } = useTab();
+    const { currentTab, isOpen } = useTab();
 
     function correctTab() {
         return currentTab !== 'today' && currentTab !== 'upcoming' && currentTab !== 'important' && currentTab !== 'finished';
@@ -135,25 +136,6 @@ function TasksTab() {
 
         setTasks(tasks);
     }
-
-    // useEffect(() => {
-    //     if(SORT_ACTIONS[sortByAux].column === 'date') {
-    //         if(SORT_ACTIONS[sortByAux].order === 'asc')
-    //             tasks.sort(compareDateAsc);
-    //         else tasks.sort(compareDateDesc)
-    //     }
-    //     else {
-    //         if(SORT_ACTIONS[sortByAux].order === 'asc')
-    //             tasks.sort(comparePriorityAsc);
-    //         else tasks.sort(comparePriorityDesc);
-    //     }
-
-    //     console.log(tasks);
-    //     setTasks(tasks);
-    //     handleUpdate();
-
-    // }, [sortByAux]);
-
  
     function handleSelect(e) {
         setSortBy(e.currentTarget.value);
@@ -164,7 +146,9 @@ function TasksTab() {
     return (
         <>
             <TaskDialogCreate open={openCreateTask} closeDialog={handleCloseCreateTask} />
-            <div className="flex flex-col pt-6 px-[5%] w-full">
+            
+            <div className={`flex flex-col pt-2 px-[5%] w-full xl:mt-2 ${isOpen ? 'pointer-events-none opacity-20' : ''}`}>
+                <Menu />
                 <p className="text-[30px]">{ currentUser.displayName || 'User'} 's { tab } tasks</p>
                 <div className="flex flex-row justify-between items-center xl:flex-col xl:items-start xl:[&>*]:mb-2">
                     { correctTab() && 

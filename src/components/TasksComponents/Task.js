@@ -36,17 +36,19 @@ function Task({task}) {
         <>
             <TaskDialogUpdate open={openUpdateTask} task={task} closeDialog={handleCloseUpdateTask} />
             <div className="flex flex-col">
-                <div className="flex flex-row bg-gray-200 h-[50px] w-full flex-grow ]">
+                <div className="flex flex-row bg-gray-200 h-[50px] w-full flex-grow">
                     <PriorityBlock priority={task.priority} finished={task.finished} />
                     <div className={`${task.finished && 'lineThrough'} flex flex-row items-center float-right justify-between w-full`}>
                         <div className="flex flex-row items-center">
                             <input onChange={(e) => updateFinishedTask(e.target.checked, task.taskUid)} 
                                 className="h-[20px] w-[20px] mr-4" type='checkbox' defaultChecked={task.finished}/>
-                            <p className={`font-semibold text-[20px] w-[200px] inline-block overflow-hidden overflow-ellipsis`}>
-                                {task.name}
+                            <p className={`font-semibold text-[20px] w-[200px] sm:w-[100px] inline-block overflow-hidden overflow-ellipsis whitespace-nowrap`}>
+                                <span>
+                                    {task.name}
+                                </span>
                             </p>
                         </div>
-                        <div className="flex flex-row items-center [&>*]:mr-4">
+                        <div className="flex flex-row items-center [&>*]:mr-4 sm:[&>*]:mr-2">
                             <p className={`sm:hidden text-[20px] font-semibold xl:text-[16px]`}>{formattedDate}</p>
                             <p className={`sm:hidden flex flex-row items-center justify-center  rounded-lg font-semibold text-[20px] px-2 h-[30px] w-[100px] 
                             
@@ -54,7 +56,7 @@ function Task({task}) {
                                  { task.priority === 1 ? <span>High</span> : task.priority === 2 ? <span>Medium</span>  : <span>Low</span> }
                             </p>
                             <div onClick={() => setClick(c => !c)}
-                                className="flex flex-row items-center justify-center no-underline w-[100px] px-2 hover:cursor-pointer hover:bg-red-300 hover:text-white rounded-lg">
+                                className="flex flex-row items-center justify-center no-underline w-[100px]  px-2 hover:cursor-pointer hover:bg-red-300 hover:text-white rounded-lg">
                                 <TbListDetails size={20}/>
                                 <p className="text-[18px]">{ click ? 'Hide' : 'Details'}</p>
                             </div>
@@ -69,8 +71,8 @@ function Task({task}) {
                         </div>
                     </div>
                 </div>
-                <div className={`${!click ? 'scale-y-0 hidden' : 'scale-y-100 duration-500 '} flex flex-row transition ease-in-out origin-top bg-gray-200 `}>
-                    <PriorityBlock priority={task.priority} finished={task.finished} />
+                <div className={`${!click ? 'hidden' : 'block'} flex flex-row bg-gray-200 -mt-2`}>
+                    <PriorityBlock className='sm:w-[6px]' priority={task.priority} finished={task.finished} />
                     <div>
                         <p className="font-semibold text-[20px]">{task.name}</p>
                         <p  className="text-[20px]">{task.description}</p>

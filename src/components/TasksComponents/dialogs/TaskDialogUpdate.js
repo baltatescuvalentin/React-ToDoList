@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FaTimes } from 'react-icons/fa';
 import TaskFormUpdate from "../dialog-content/TaskFormUpdate";
 
@@ -21,7 +21,7 @@ function DialogTitleCustom({closeDialog}) {
     return (
 
         <DialogTitle className='flex flex-row items-center justify-between'>
-            <p className="text-[40px]">
+            <p className="text-[40px] sm:text-[30px]">
                 Update the task
             </p>
             <button onClick={closeDialog} className="flex items-center justify-center rounded-full hover:bg-gray-200 w-10 h-10">

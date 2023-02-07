@@ -72,11 +72,14 @@ function Folders() {
 
 function Folder({folderName, folderUid}) {
 
-    const { setCurrentTab } = useTab();
+    const { setCurrentTab, handleIsOpen } = useTab();
 
     return (
         <div className="flex flex-row items-center justify-between w-[inherit]">
-            <div onClick={() => setCurrentTab(folderName)} 
+            <div onClick={() => { 
+                    setCurrentTab(folderName);
+                    handleIsOpen();
+                }} 
                 className="flex flex-row items-center hover:bg-gray-200 hover:cursor-pointer rounded-lg mx-2 px-2">
                 <ImFolderOpen size={24} color='tomato' />
                 <p className="text-[20px] w-[112px] ml-2 inline-block overflow-hidden overflow-ellipsis whitespace-nowrap">

@@ -31,7 +31,7 @@ function NotesForm({closeDialog}) {
     }
 
     return (
-        <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[500px]">
+        <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[500px] sm:w-inherit">
             {/* <label className="text-[18px]" htmlFor="name">Name</label>
             <input type='text' id='name' required placeholder='Name...'
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800" 

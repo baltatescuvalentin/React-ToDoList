@@ -1,11 +1,11 @@
-import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FaTimes } from 'react-icons/fa';
 import FoldersForm from "../dialog-content/FoldersForm";
 
 
 function FoldersDialogCreate({closeDialog, open}) {
     return (
-        <Dialog className='sm:m-auto'
+        <Dialog 
             open={open}>
             <DialogTitleCustom closeDialog={closeDialog}/>
             <DialogContent>
@@ -19,7 +19,7 @@ function DialogTitleCustom({closeDialog}) {
     return (
 
         <DialogTitle className='flex flex-row items-center justify-between'>
-            <p className="text-[40px] sm:text-[20px] font-semibold">
+            <p className="text-[40px] sm:text-[22px] font-semibold">
                 Create New Task Folder
             </p>
             <button onClick={closeDialog} className="flex items-center justify-center rounded-full hover:bg-gray-200 w-10 h-10">
