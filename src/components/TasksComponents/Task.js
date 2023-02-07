@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TbListDetails } from 'react-icons/tb';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaTimes } from "react-icons/fa";

@@ -21,7 +21,7 @@ function TasksTab() {
     
     const [tasks, setTasks] = useState([]);
     const [tab, setTab] = useState('inbox');
-    const [sortBy, setSortBy, sortByRef] = useStateRef('DATE_ASC');
+    const [, setSortBy, sortByRef] = useStateRef('DATE_ASC');
     const sortByRefHook = useRef(sortByRef.current);
     const [loading, setLoading] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);

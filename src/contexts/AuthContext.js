@@ -14,7 +14,7 @@ export function useAuth() {
 export function AuthProvider({children}) {
 
     const [currentUser, setCurrentUser] = useState();
-    const [loading, setLoading] = useState(true);
+    //const [loading, setLoading] = useState(true);
 
     async function signup(username, email, password, fullname) {
 
@@ -36,11 +36,8 @@ export function AuthProvider({children}) {
     }
 
     async function resetpassword(username, newPassword) {
-        const email = await findEmailWithUsername(username);
         const user = currentUser;
-        console.log(user);
         return await updatePassword(user, newPassword);
-        // return await signInWithEmailAndPassword(auth, email, newPassword);
     }
 
     async function signout() {
@@ -50,7 +47,7 @@ export function AuthProvider({children}) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if(user) {
-                setLoading(false);
+                //setLoading(false);
                 setCurrentUser(user);
             }
             else {

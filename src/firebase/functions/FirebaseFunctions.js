@@ -1,5 +1,5 @@
-import app, { firestore } from "../firebase";
-import { collection, query, where, getDocs, addDoc, orderBy, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { firestore } from "../firebase";
+import { collection, query, where, getDocs, addDoc, orderBy, deleteDoc, updateDoc } from "firebase/firestore";
 import { v4 as uuid4 } from 'uuid';
 
 async function checkIfExistsInUsers(username, email) {

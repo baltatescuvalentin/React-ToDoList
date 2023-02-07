@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
-import { checkIfExistsInUsers } from "./functions/FirebaseFunctions";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

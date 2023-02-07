@@ -1,8 +1,7 @@
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useState } from 'react';
 import { useTab } from '../../../contexts/TasksTabContext';
-import { addToTasks, updateTask } from '../../../firebase/functions/FirebaseFunctions';
+import { updateTask } from '../../../firebase/functions/FirebaseFunctions';
 
 function TaskFormUpdate({task, closeDialog }) {
 

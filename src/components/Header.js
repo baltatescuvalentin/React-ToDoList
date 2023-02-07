@@ -13,7 +13,7 @@ function Header() {
         <div className='flex flex-row items-center justify-between h-32 w-full bg-red-400 p-5 gap-2'>
             <div onClick={() => navigator('/')}
                 className='flex flex-row items-center hover:cursor-pointer'>
-                <img className='h-16 w-18 ml-10 mr-2' src={logo}/>
+                <img className='h-16 w-18 ml-10 mr-2' src={logo} alt='logo'/>
                 <p className='text-7xl text-white font-bold sm:hidden'>To-Do List</p>
             </div>
             <div className='flex flex-row items-center'>
