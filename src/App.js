@@ -12,7 +12,7 @@ import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
-    <BrowserRouter basename='/react-todolist'>
+    <BrowserRouter>
       <AuthProvider>
         <Routes>
           <Route path='/' element={<SharedLayout />}>
