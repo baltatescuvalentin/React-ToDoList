@@ -1,3 +1,6 @@
+# Live preview of the app is here:
+https://todo-app-289b4.web.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
