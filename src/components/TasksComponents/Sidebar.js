@@ -9,12 +9,10 @@ import { FaTimes } from 'react-icons/fa';
 
 function Sidebar() {
 
-    const { isOpen, handleIsOpen } = useTab();
-
     return (
         <>
 
-            <div className={`flex flex-col absolute z-10 py-6 px-10 bg-gray-300 min-h-full w-[350px] min-h-full top-0 duration-500 ${isOpen ? 'left-0' : '-left-full'}`}>
+            {/* <div className={`flex flex-col absolute z-10 py-6 px-10 bg-gray-300 min-h-full w-[350px] min-h-full top-0 duration-500 ${isOpen ? 'left-0' : '-left-full'}`}>
                 <div className='w-full flex flex-row justify-end items-center'>
                     <button onClick={handleIsOpen} className='rounded-full hover:bg-gray-300 mb-4'>
                         <FaTimes
@@ -27,7 +25,7 @@ function Sidebar() {
                 <Notes />
 
                 <Folders />
-            </div>
+            </div> */}
 
             <div className="flex flex-col xl:hidden py-6 px-10 bg-[#f5f5f54d] min-h-full w-[350px] shadow-[4px_0_5px_-2px_rgba(0,_0,_0,_0.7)]">
                 <Tabs />
@@ -40,37 +38,62 @@ function Sidebar() {
     )
 }
 
-function Tabs() {
+function Tabs(props) {
 
     const { setCurrentTab } = useTab();
 
     return (
         <div>
-            <div onClick={() => setCurrentTab('inbox')} 
+            <div onClick={() => 
+                    {
+                        setCurrentTab('inbox');
+                        props?.handleIsOpen();
+                    }
+                }
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <FiInbox size={30} className='ml-2' color='tomato'/>
                 <p className='ml-4 text-[28px]'>Inbox</p>
             </div>
 
-            <div onClick={() => setCurrentTab('today')} 
+            <div onClick={() => 
+                    {
+                        setCurrentTab('today');
+                        props?.handleIsOpen();
+                    }
+                } 
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <TbCalendarEvent size={30} className='ml-2' color='tomato' />
                 <p className='ml-4 text-[28px]'>Today</p>
             </div>
 
-            <div onClick={() => setCurrentTab('upcoming')}  
+            <div onClick={() => 
+                    {
+                        setCurrentTab('upcoming');
+                        props?.handleIsOpen();
+                    }
+                }  
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <TbCalendarTime size={30} className='ml-2' color='tomato' />
                 <p className='ml-4 text-[28px]'>Upcoming</p>
             </div>
 
-            <div onClick={() => setCurrentTab('important')}  
+            <div onClick={() => 
+                    {
+                        setCurrentTab('important');
+                        props?.handleIsOpen();
+                    }
+                }  
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <BsCircleFill size={30} className='ml-2' color='red' />
                 <p className='ml-4 text-[28px]'>Important</p>
             </div>
 
-            <div onClick={() => setCurrentTab('finished')}  
+            <div onClick={() => 
+                    {
+                        setCurrentTab('finished');
+                        props?.handleIsOpen();
+                    }
+                }  
                 className='flex flex-row items-center justify-start rounded-lg hover:bg-gray-200 hover:cursor-pointer'>
                 <IoMdDoneAll size={30} className='ml-2' color='tomato' />
                 <p className='ml-4 text-[28px]'>Finished</p>
@@ -80,3 +103,7 @@ function Tabs() {
 }
 
 export default Sidebar;
+
+export {
+    Tabs,
+}

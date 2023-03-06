@@ -1,6 +1,9 @@
 import { Outlet } from 'react-router-dom';
+import { TabProvider } from '../contexts/TasksTabContext';
 import Footer from './Footer';
 import Header from './Header';
+import MobileSidebar from './TasksComponents/MobileSidebar';
+
 
 function SharedLayout() {
     return (

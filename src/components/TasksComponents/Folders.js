@@ -12,7 +12,7 @@ import Spinner from "../../utils/Spinner";
 import FoldersDialogCreate from "./dialogs/FoldersDialogCreate";
 
 
-function Folders() {
+function Folders(props) {
 
     const [openCreateFolder, setOpenCreateFolder] = useState(false);
     const [folders, setFolders] = useState([]);
@@ -45,7 +45,7 @@ function Folders() {
     }
 
     const Folders = folders?.map((f) => {
-        return <Folder key={f.folderUid} folderName={f.folderName} folderUid={f.folderUid}/>
+        return <Folder key={f.folderUid} handleIsOpen={props?.handleIsOpen} folderName={f.folderName} folderUid={f.folderUid}/>
     })
     
     return (
@@ -70,7 +70,7 @@ function Folders() {
     )
 }
 
-function Folder({folderName, folderUid}) {
+function Folder({folderName, folderUid, handleIsOpen}) {
 
     const { setCurrentTab } = useTab();
 
@@ -78,6 +78,7 @@ function Folder({folderName, folderUid}) {
         <div className="flex flex-row items-center justify-between w-[inherit]">
             <div onClick={() => { 
                     setCurrentTab(folderName);
+                    handleIsOpen();
                 }} 
                 className="flex flex-row items-center hover:bg-gray-200 hover:cursor-pointer rounded-lg mx-2 px-2">
                 <ImFolderOpen size={24} color='tomato' />
