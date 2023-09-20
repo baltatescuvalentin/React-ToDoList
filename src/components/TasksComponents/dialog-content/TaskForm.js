@@ -2,26 +2,52 @@
 import { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTab } from '../../../contexts/TasksTabContext';
-import { addToTasks } from '../../../firebase/functions/FirebaseFunctions';
 
+function TaskForm({task=null, closeDialog, handleForm, update=false, errorMsg }) {
 
-function TaskForm({ closeDialog }) {
+    let nameVal, desciptionVal, dateVal, timeVal, priorityVal, finishedVal, isTask = false;
 
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState();
-    const [time, setTime] = useState('');
-    const [priority, setPriority] = useState();
-    const [errorMsg, setErrorMsg] = useState('');
+    if(task) {
+        nameVal = task.name;
+        desciptionVal = task.description;
+        dateVal = task.date;
+        timeVal = task.time;
+        priorityVal = task.priority;
+        finishedVal = task.finished;
+        isTask = true;
+    }
+    else {
+        nameVal = '';
+        desciptionVal = '';
+        dateVal = null;
+        timeVal = '';
+        priorityVal = 0;
+        finishedVal = false;
+    }
+
+    const [name, setName] = useState(nameVal);
+    const [description, setDescription] = useState(desciptionVal);
+    const [date, setDate] = useState(dateVal);
+    const [time, setTime] = useState(timeVal);
+    const [priority, setPriority] = useState(priorityVal);
+    const [finished, setFinished] = useState(finishedVal);
     
     const { currentTab } = useTab();
     const { currentUser } = useAuth();
+
+    let uid;
+    if(isTask) {
+        uid = task.taskUid;
+    }
+    else {
+        uid = currentUser.uid;
+    }
 
     function validateForm() {
         return name && date && priority;
     }
 
-    async function handleForm(e) {
+    /*async function handleForm(e) {
         e.preventDefault();
         
         try {
@@ -33,29 +59,29 @@ function TaskForm({ closeDialog }) {
             setErrorMsg('Error creating the task. Try again!');
         }
 
-    }
+    }*/
 
     return (
-        <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[inherit]">
+        <form onSubmit={(e) => handleForm(e, currentTab, name, description, date, priority, finished, uid, time)} className="flex flex-col w-[inherit]">
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Task name</label>
-            <input type='text' id='name' required placeholder='Task Name...'
+            <input type='text' id='name' required placeholder='Task Name...' value={name}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setName(e.target.value)}
             />
             <label className="text-[18px]" htmlFor="description">Description</label>
-            <textarea id='desciption'  placeholder='Description...'
+            <textarea id='desciption'  placeholder='Description...' value={description}
                 className="mb-4 h-[100px] w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDescription(e.target.value)}
             />
             <label className="text-[18px]" htmlFor="date">Date</label>
-            <input type='date' id='date' required 
+            <input type='date' id='date' required value={date}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setDate(e.target.value)}
             />
 
             <label className="text-[18px]" htmlFor="time">Time</label>
-            <input type='time' id='time' 
+            <input type='time' id='time' value={time}
                 className="mb-4 w-[inherit] text-[22px] outline-none border-b-2 border-gray-800 resize-none" 
                 onChange={(e) => setTime(e.target.value)}
             />
@@ -99,11 +125,16 @@ function TaskForm({ closeDialog }) {
                     </div>
                 </div>
             </div>
+            {update && (
+                <label className="flex flex-row items-center text-[30px] mb-2" htmlFor="finished"> Finished
+                    <input onChange={(e) => setFinished(e.target.checked)}  className="h-[30px] w-[30px] ml-4" defaultChecked={finished} type='checkbox' />
+                </label>
+            )}
             { !validateForm() && <p className="text-[18px] mb-2 font-bold text-red-500">Name, date and priority are required!</p>}
             <input type="submit" 
                     disabled={validateForm() ? false : true} 
                     className={`text-[24px] bg-green-400 rounded-lg text-white  h-10 ${validateForm() && 'hover:cursor-pointer'} ${validateForm() ? 'bg-green-400 shadow' : 'bg-gray-400'}`} 
-                    value="Add new task!"/> 
+                    value={`${update? 'Update task!' : 'Add new task!'}`}/> 
         </form>
     )
 }

@@ -1,7 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FaTimes } from 'react-icons/fa';
-import TaskForm from "../dialog-content/TaskForm";
-
+import TaskFormCreate from "../dialog-content/TaskFormCreate";
 
 
 function TaskDialogCreate({closeDialog, open}) {
@@ -10,7 +9,7 @@ function TaskDialogCreate({closeDialog, open}) {
         maxWidth="md" open={open}>
             <DialogTitleCustom closeDialog={closeDialog}/>
             <DialogContent>
-                <TaskForm closeDialog={closeDialog}/>
+                <TaskFormCreate closeDialog={closeDialog}/>
             </DialogContent>
         </Dialog>
     )

@@ -1,39 +1,30 @@
 
 import { useState } from 'react';
-import { useTab } from '../../../contexts/TasksTabContext';
 import { updateTask } from '../../../firebase/functions/FirebaseFunctions';
+import TaskForm from './TaskForm';
 
 function TaskFormUpdate({task, closeDialog }) {
 
-    const [name, setName] = useState(task.name);
+    /*const [name, setName] = useState(task.name);
     const [description, setDescription] = useState(task.description);
     const [date, setDate] = useState(task.date);
     const [time, setTime] = useState(task.time);
     const [priority, setPriority] = useState(task.priority);
     const [finished, setFinished] = useState(task.finished);
     const [errorMsg, setErrorMsg] = useState('');
-    
-    // useEffect(() => {
-    //     setPriority(task.priority);
-    //     setName(task.name);
-    //     setDescription(task.description);
-    //     setDate(task.date);
-    //     setTime(task.time);
-    //     setFinished(task.finished);
-    // }, [])
-
-    const { currentTab } = useTab();
 
     function validateForm() {
         return name && date && priority;
-    }
+    }*/
 
-    async function handleForm(e) {
+    const [errorMsg, setErrorMsg] = useState('');
+
+    async function handleForm(e, currentTab, name, description, date, priority, finished, taskUid, time) {
         e.preventDefault();
         
         try {
             setErrorMsg('')
-            await updateTask(currentTab, name, description, date, priority, finished, task.taskUid, time);
+            await updateTask(currentTab, name, description, date, priority, finished, taskUid, time);
             closeDialog();
         }
         catch {
@@ -43,6 +34,10 @@ function TaskFormUpdate({task, closeDialog }) {
     }
 
     return (
+        <TaskForm closeDialog={closeDialog} task={task} handleForm={handleForm} update={true} errorMsg={errorMsg}/>
+    )
+
+    /*return (
         <form onSubmit={(e) => handleForm(e)} className="flex flex-col w-[inherit]">
             { errorMsg && <p className="text-3xl text-red-800 font-medium mb-2">{errorMsg}</p>}
             <label className="text-[18px]" htmlFor="name">Task name</label>
@@ -115,7 +110,7 @@ function TaskFormUpdate({task, closeDialog }) {
                     className={`text-[24px] bg-green-400 rounded-lg text-white  h-10 ${validateForm() && 'hover:cursor-pointer'} ${validateForm() ? 'bg-green-400 shadow' : 'bg-gray-400'}`} 
                     value="Update task!"/> 
         </form>
-    )
+    )*/
 }
 
 export default TaskFormUpdate;
